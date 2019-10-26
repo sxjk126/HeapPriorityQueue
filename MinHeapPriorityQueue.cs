@@ -33,7 +33,7 @@ namespace HeapPriorityQueue
         {
             if (index != 0)
             {
-                return index / 2;
+                return (index - 1) / 2;
             }
             else
             {
@@ -44,27 +44,13 @@ namespace HeapPriorityQueue
         //Return the index of the left child of the given index in the heap.
         private int LeftChild(int index)
         {
-            if (index != 0)
-            {
-                return index * 2;
-            }
-            else
-            {
-                return 1;
-            }
+            return index * 2 + 1;
         }
 
         //Return the index of the right child of the given index in the heap.
         private int RightChild(int index)
         {
-            if (index != 0)
-            {
-                return index * 2 + 1;
-            }
-            else
-            {
-                return 2;
-            }
+            return index * 2 + 2;
         }
 
         //Return true if the given index has a parent in the heap
@@ -76,27 +62,16 @@ namespace HeapPriorityQueue
         //Return true if the given index has a left child in the heap
         private bool HasLeftChild(int index)
         {
-            if (index != 0)
-            {
-                return LeftChild(index) <= elements.Count;
-            }
-            else
-            {
-                return LeftChild(index) == 1;
-            }
+           
+                return LeftChild(index) < elements.Count;
+            
         }
 
         //Return true if the given index has a right child in the heap
         private bool HasRightChild(int index)
         {
-            if (index != 0)
-            {
-                return RightChild(index) <= elements.Count;
-            }
-            else
-            {
-                return RightChild(index) == 2;
-            }
+               return RightChild(index) < elements.Count;
+            
         }
 
         //Swaps the elements at the two given indexes in the array.
@@ -111,7 +86,7 @@ namespace HeapPriorityQueue
             //Bubble index
             int index = elements.Count;
             //Put value into last slot
-            elements[index] = value;
+            elements.Add(value);
             //"Bubble up" until in order again
             bool done = false;
             while (!done && HasParent(index))
@@ -158,7 +133,8 @@ namespace HeapPriorityQueue
             else
             {
                 T frontValue = elements[0];
-                elements[0] = elements[elements.Count];
+                elements[0] = elements[elements.Count - 1];
+                elements.RemoveAt(elements.Count - 1);
 
                 //Bubble down until order is restored
                 bool done = false;
